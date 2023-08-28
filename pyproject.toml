@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "cjkfuzz"
+version = "0.0.0"
+description = "A Python package for fuzzy matching CJK strings."
+authors = ["Eddie Lin <eddielin0926@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+
+
+[tool.poetry.group.dev.dependencies]
+pre-commit = "^3.3.3"
+black = "^23.7.0"
+isort = "^5.12.0"
+flake8 = "^6.1.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
