@@ -1,0 +1,3 @@
+[submodule "cjkfuzz/chaizi"]
+	path = cjkfuzz/chaizi
+	url = https://github.com/kfcd/chaizi
