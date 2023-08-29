@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "cjkfuzz"
-version = "0.0.0"
+version = "0.0.1"
 description = "A Python package for fuzzy matching CJK strings."
 authors = ["Eddie Lin <eddielin0926@gmail.com>"]
 readme = "README.md"
