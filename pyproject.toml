@@ -16,6 +16,8 @@ isort = "^5.12.0"
 ruff = "^0.0.286"
 pytest = "^7.4.0"
 pytest-cov = "^4.1.0"
+sphinx = "^7.2.4"
+furo = "^2023.8.19"
 
 [tool.black]
 line-length = 100

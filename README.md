@@ -1,7 +1,12 @@
 # CJKFuzz
+[![Supported Python Versions](https://img.shields.io/pypi/pyversions/cjkfuzz/0.0.1)](https://pypi.org/project/cjkfuzz/) [![PyPI version](https://badge.fury.io/py/cjkfuzz.svg)](https://badge.fury.io/py/cjkfuzz)
 
-## Reference
+## Installation
 
-- [fuzzchinese](https://github.com/seatgeek/thefuzz)
-- [thefuzz](https://github.com/seatgeek/thefuzz)
-- [rapidfuzz](https://github.com/maxbachmann/RapidFuzz)
+```shell
+pip install cjkfuzz
+```
+
+## License
+
+This project is licensed under the terms of the [MIT License](LICENSE)
