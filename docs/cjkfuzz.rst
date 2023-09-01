@@ -13,6 +13,8 @@ Submodules
    cjkfuzz.jaro_winkler
    cjkfuzz.levenshtein
    cjkfuzz.process
+   cjkfuzz.tokenizer
+   cjkfuzz.utils
 
 Module contents
 ---------------

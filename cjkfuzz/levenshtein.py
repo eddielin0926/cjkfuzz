@@ -1,8 +1,25 @@
+"""Provide functions for calculating the Levenshtein edit distance"""
 from typing import Hashable, Sequence
 
 
 def distance(s1: Sequence[Hashable], s2: Sequence[Hashable]) -> int:
-    """Return the Levenshtein edit distance between two sequences"""
+    """Return the Levenshtein edit distance between two sequences
+
+    The Levenshtein edit distance is the minimum number of single-character edits (insertions,
+    deletions or substitutions) required to change one word into the other.
+
+    Args:
+        s1:
+            The first sequence to compare.
+        s2:
+            The second sequence to compare.
+
+    Returns:
+        int: The Levenshtein edit distance between the two sequences.
+
+    Raises:
+        TypeError: If s1 or s2 is None.
+    """
     dp = [[0] * (len(s1) + 1) for _ in range(len(s2) + 1)]
     for i in range(len(s1) + 1):
         dp[0][i] = i

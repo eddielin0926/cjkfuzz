@@ -1,3 +1,7 @@
+"""CJK Fuzzy Matching Library
+
+This library provides fuzzy matching algorithms for CJK (Chinese, Japanese, Korean) strings.
+"""
 from cjkfuzz import fuzz, hamming, jaro, jaro_winkler, levenshtein
 
 __author__: str = "Eddie Lin"
