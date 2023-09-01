@@ -1,3 +1,5 @@
+"""Provides utility functions for cjkfuzz."""
+
 ranges = [
     {"from": ord("\u3300"), "to": ord("\u33ff")},  # compatibility ideographs
     {"from": ord("\ufe30"), "to": ord("\ufe4f")},  # compatibility ideographs
@@ -15,5 +17,5 @@ ranges = [
 ]
 
 
-def is_cjk_char(char):
+def is_cjk_char(char: str) -> bool:
     return any([range["from"] <= ord(char) <= range["to"] for range in ranges])

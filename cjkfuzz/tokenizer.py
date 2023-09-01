@@ -1,9 +1,19 @@
+"""Provide tokenizer functions."""
 from typing import Hashable, Sequence
 
 from cjkfuzz import utils
 
 
 def default(seq: Sequence[Hashable]) -> Sequence[Hashable]:
+    """Return tokens from the sequence.
+
+    Args:
+        seq:
+            The sequence to tokenize.
+
+    Returns:
+        A list of tokens.
+    """
     result = [""]
     for ele in seq:
         if utils.is_cjk_char(ele):

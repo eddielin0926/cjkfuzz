@@ -1,4 +1,4 @@
-"""This module provides functions to calculate the similarity between two sequences.
+"""Provides functions to calculate the similarity between two sequences.
 
 The functions provide various methods to calculate the similarity between two sequences. The
 similarity is between 0 and 1, inclusive. The higher the similarity, the more similar the two
