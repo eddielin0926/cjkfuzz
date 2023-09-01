@@ -1,12 +1,12 @@
 from typing import Callable, Hashable, Sequence
 
-from cjkfuzz import levenshtein
+from cjkfuzz import levenshtein, tokenizer
 
 
 def ratio(
     s1: Sequence[Hashable],
     s2: Sequence[Hashable],
-    processor: Callable[..., Sequence[Hashable]] = None,
+    preprocess: Callable[..., Sequence[Hashable]] = None,
     scorer: Callable[..., float] = levenshtein.ratio,
 ) -> float:
     """Return a measure of the sequences' similarity between 0 and 1.
@@ -14,7 +14,7 @@ def ratio(
     Args:
         s1: The first sequence to compare.
         s2: The second sequence to compare.
-        processor: A function that pre-process the input sequences. For example, it can tokenize
+        preprocess: A function that pre-process the input sequences. For example, it can tokenize
             the input sequences by words or characters.
         scorer: A function that provides a measure of the similarity between two sequences and it
             should returns a float between 0 and 1, inclusive. The default scorer is the
@@ -29,9 +29,9 @@ def ratio(
     """
     if s1 is None or s2 is None:
         raise TypeError("s1 and s2 must be non-None")
-    if processor is not None:
-        s1 = processor(s1)
-        s2 = processor(s2)
+    if preprocess is not None:
+        s1 = preprocess(s1)
+        s2 = preprocess(s2)
     score = scorer(s1, s2)
     if score < 0.0 or score > 1.0:
         raise ValueError("scorer must return a value between 0 and 1")
@@ -41,14 +41,14 @@ def ratio(
 def partial_ratio(
     s1: Sequence[Hashable],
     s2: Sequence[Hashable],
-    processor: Callable[..., Sequence[Hashable]] = None,
+    preprocess: Callable[..., Sequence[Hashable]] = None,
     scorer: Callable[..., float] = levenshtein.ratio,
 ) -> float:
     if s1 is None or s2 is None:
         raise TypeError("s1 and s2 must be non-None")
-    if processor is not None:
-        s1 = processor(s1)
-        s2 = processor(s2)
+    if preprocess is not None:
+        s1 = preprocess(s1)
+        s2 = preprocess(s2)
     if len(s1) > len(s2):
         s1, s2 = s2, s1
     best = 0.0
@@ -57,3 +57,23 @@ def partial_ratio(
         if score > best:
             best = score
     return best
+
+
+def token_sort_ratio(
+    s1: Sequence[Hashable],
+    s2: Sequence[Hashable],
+    preprocess: Callable[..., Sequence[Hashable]] = None,
+    tokenizer: Callable[..., Sequence[Hashable]] = tokenizer.default,
+    scorer: Callable[..., float] = levenshtein.ratio,
+) -> float:
+    if s1 is None or s2 is None:
+        raise TypeError("s1 and s2 must be non-None")
+    if tokenizer is None:
+        raise TypeError("preprocess must be non-None")
+    if preprocess is not None:
+        s1 = preprocess(s1)
+        s2 = preprocess(s2)
+    s1 = sorted(tokenizer(s1))
+    s2 = sorted(tokenizer(s2))
+    print(s1, s2)
+    return scorer(sorted(s1), sorted(s2))
