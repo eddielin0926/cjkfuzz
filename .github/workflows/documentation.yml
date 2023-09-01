@@ -33,11 +33,11 @@ jobs:
       run: pip install sphinx furo
     - name: Sphinx build
       run: sphinx-build docs _build
-     - name: Upload artifact
+    - name: Upload artifact
       uses: actions/upload-pages-artifact@v2
       with:
         # Upload entire repository
         path: '_build'
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v2
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v2
