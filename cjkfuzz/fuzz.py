@@ -87,11 +87,13 @@ def partial_ratio(
         s2 = preprocess(s2)
     if len(s1) > len(s2):
         s1, s2 = s2, s1
-    best = 0.0
-    for i in range(len(s2) - len(s1) + 1):
-        score = scorer(s1, s2[i : i + len(s1)])
-        if score > best:
-            best = score
+    best = scorer(s1, s2)
+    # TODO: Use a better algorithm to find the best matching substring.
+    for i in range(len(s1), len(s2)):
+        for j in range(len(s2) - i + 1):
+            score = scorer(s1, s2[j : j + i])
+            if score > best:
+                best = score
     return best
 
 
@@ -117,7 +119,7 @@ def token_sort_ratio(
             A function that pre-process the input sequences. For example, it can change the chinese
             characters to their pinyin representations.
         tokenizer:
-            A function that tokenizes the input sequences. The default tokenizer is the default
+            A function that tokenize the input sequences. The default tokenizer is the default
             tokenizer in the tokenizer module.
         scorer:
             A function that provides a measure of the similarity between two sequences and it
@@ -140,5 +142,4 @@ def token_sort_ratio(
         s2 = preprocess(s2)
     s1 = sorted(tokenizer(s1))
     s2 = sorted(tokenizer(s2))
-    print(s1, s2)
     return scorer(sorted(s1), sorted(s2))
