@@ -12,6 +12,7 @@ Submodules
    cjkfuzz.jaro
    cjkfuzz.jaro_winkler
    cjkfuzz.levenshtein
+   cjkfuzz.match
    cjkfuzz.process
    cjkfuzz.tokenizer
    cjkfuzz.utils
