@@ -1,37 +1,13 @@
-name: Test Python 🐍 build and check 🔍 code quality
+name: Build and publish to TestPyPI 🐍
 
 on:
-  pull_request:
+  push:
     branches:
       - main
   workflow_dispatch:
 
 jobs:
-  test:
-    strategy:
-      fail-fast: false
-      matrix:
-        python-version: ["3.9", "3.10", "3.11"]
-        os: [ubuntu-latest, windows-latest, macos-latest]
-    runs-on: ${{ matrix.os }}
-
-    steps:
-      - uses: actions/checkout@v3
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v3
-        with:
-          python-version: ${{ matrix.python-version }}
-      - name: Install Poetry
-        uses: snok/install-poetry@v1
-      - name: Install dependencies
-        run: poetry install
-      - name: Check with ruff
-        run: poetry run ruff check .
-      - name: Test with pytest
-        run: poetry run pytest --cov
-
   publish:
-    needs: test
     runs-on: ubuntu-latest
 
     steps:
