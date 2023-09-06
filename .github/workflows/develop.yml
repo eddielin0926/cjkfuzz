@@ -1,9 +1,6 @@
 name: Test Python 🐍 build and check 🔍 code quality
 
 on:
-  push:
-    branches:
-      - main
   pull_request:
     branches:
       - main
@@ -29,9 +26,9 @@ jobs:
       - name: Install dependencies
         run: poetry install
       - name: Check with ruff
-        run: poetry run ruff
+        run: poetry run ruff check .
       - name: Test with pytest
-        run: poetry run pytest
+        run: poetry run pytest --cov
 
   publish:
     needs: test
