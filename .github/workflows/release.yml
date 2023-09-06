@@ -43,10 +43,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Build and publish to PyPI
-        uses: JRubics/poetry-publish@v1.17
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v3
         with:
-          pypi_token: ${{ secrets.PYPI_API_TOKEN }}
+          python-version: 3.9
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+      - name: Configure Poetry
+        run: poetry config pypi-token.pypi ${{ secrets.PYPI_API_TOKEN  }}
+      - name: Install dependencies
+        run: poetry install
+      - name: Build package
+        run: poetry build
+      - name: Publish package to PyPI
+        run: poetry publish --skip-existing
 
   webapp:
     environment:
