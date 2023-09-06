@@ -5,6 +5,10 @@ on:
     types: [published]
   workflow_dispatch:
 
+defaults:
+  run:
+    shell: bash
+
 permissions:
   contents: read
   pages: write
@@ -30,16 +34,16 @@ jobs:
       - name: Install dependencies
         run: poetry install
       - name: Check with ruff
-        run: poetry run ruff
+        run: poetry run ruff check .
       - name: Test with pytest
-        run: poetry run pytest
+        run: poetry run pytest --cov
 
   publish:
     needs: test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Build and publish to TestPyPI
+      - name: Build and publish to PyPI
         uses: JRubics/poetry-publish@v1.17
         with:
           pypi_token: ${{ secrets.PYPI_API_TOKEN }}
