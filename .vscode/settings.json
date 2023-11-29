@@ -1,14 +1,16 @@
 {
-    "cSpell.words": [
-        "cjkfuzz",
-        "isort",
-        "jaro",
-        "ldist",
-        "outdir",
-        "pypa",
-        "pypi",
-        "pytest",
-        "sdist",
-        "winkler"
-    ]
+  "cSpell.words": [
+    "cjkfuzz",
+    "isort",
+    "Jaccard",
+    "jaro",
+    "ldist",
+    "outdir",
+    "pypa",
+    "pypi",
+    "pytest",
+    "sdist",
+    "winkler",
+    "zhuyin"
+  ]
 }

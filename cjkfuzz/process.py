@@ -10,7 +10,7 @@ def extract(
     choices: Sequence[Sequence[Hashable]],
     limit: int = 1,
     scorer: Callable[..., float] = levenshtein.ratio,
-) -> Tuple[Sequence[Hashable], int]:
+) -> Tuple[float, Sequence[Hashable]]:
     """Return a list of the best matches
 
     Args:
