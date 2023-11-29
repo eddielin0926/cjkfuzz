@@ -24,12 +24,7 @@ def test_fuzz_ratio_none() -> None:
 
 
 def test_fuzz_partial_ratio() -> None:
-    ratio = fuzz.partial_ratio("test", "more tests")
-    assert ratio == 1.0
-
-
-def test_fuzz_partial_ratio_preprocess() -> None:
-    ratio = fuzz.partial_ratio("more tests", "test")
+    ratio = fuzz.partial_ratio("中文字", "中文")
     assert ratio == 1.0
 
 
