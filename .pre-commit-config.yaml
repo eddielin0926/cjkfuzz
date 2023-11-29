@@ -13,8 +13,8 @@ repos:
   - repo: https://github.com/psf/black
     rev: 23.7.0
     hooks:
-    - id: black
-      args: ["--preview"]
+      - id: black
+        args: ["--preview"]
 
   - repo: https://github.com/PyCQA/isort
     rev: 5.12.0
@@ -31,6 +31,5 @@ repos:
     rev: 1.5.1
     hooks:
       - id: poetry-check
-      - id: poetry-lock
       - id: poetry-export
         args: ["-f", "requirements.txt", "-o", "requirements.txt"]
