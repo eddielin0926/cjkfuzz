@@ -2,6 +2,8 @@
 import bisect
 from typing import Callable, Hashable, Sequence, Tuple
 
+from pypinyin import lazy_pinyin
+
 from cjkfuzz import levenshtein
 
 
@@ -34,9 +36,11 @@ def extract(
     """
     if limit < 1:
         raise ValueError("limit must be greater than 0")
+    query_pinyin = lazy_pinyin(query)
     candidates = []
-    for idx, choice in enumerate(choices):
-        score = scorer(query, choice)
+    for choice in choices:
+        choice_pinyin = lazy_pinyin(choice)
+        score = scorer(query_pinyin, choice_pinyin)
         # Keep the list sorted and limit the number of candidates
         bisect.insort(candidates, (score, choice))
         if len(candidates) > limit:
