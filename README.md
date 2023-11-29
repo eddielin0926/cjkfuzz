@@ -22,9 +22,20 @@ pip install git+https://github.com/eddielin0926/cjkfuzz.git
 
 ## Usage
 
+### Ratio
+
 ```python
-from cjkfuzz import fuzz
-fuzz.ratio('你好', '你好嗎?')
+>>> from cjkfuzz import fuzz
+>>> fuzz.ratio("你好", "妳好")
+1.0
+```
+
+### Process
+
+```python
+>>> from cjkfuzz import process
+>>> process.extract("你好", ["妳好", "你好嗎?"])
+[(1.0, '妳好')]
 ```
 
 ## License

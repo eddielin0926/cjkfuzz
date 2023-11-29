@@ -7,13 +7,14 @@ used as well.
 """
 from typing import Callable, Hashable, Sequence
 
-from cjkfuzz import levenshtein, tokenizer
+from pypinyin import lazy_pinyin
+
+from cjkfuzz import levenshtein
 
 
 def ratio(
     s1: Sequence[Hashable],
     s2: Sequence[Hashable],
-    preprocess: Callable[..., Sequence[Hashable]] = None,
     scorer: Callable[..., float] = levenshtein.ratio,
 ) -> float:
     """Return a measure of the sequences' similarity between 0 and 1.
@@ -23,9 +24,6 @@ def ratio(
             The first sequence to compare.
         s2:
             The second sequence to compare.
-        preprocess:
-            A function that pre-process the input sequences. For example, it can change the chinese
-            characters to their pinyin representations.
         scorer:
             A function that provides a measure of the similarity between two sequences and it
             should returns a float between 0 and 1, inclusive. The default scorer is the Levenshtein
@@ -36,23 +34,18 @@ def ratio(
 
     Raises:
         TypeError: If s1 or s2 is None.
-        ValueError: If the scorer returns a value outside of the range [0, 1].
     """
     if s1 is None or s2 is None:
         raise TypeError("s1 and s2 must be non-None")
-    if preprocess is not None:
-        s1 = preprocess(s1)
-        s2 = preprocess(s2)
+    s1 = lazy_pinyin(s1)
+    s2 = lazy_pinyin(s2)
     score = scorer(s1, s2)
-    if score < 0.0 or score > 1.0:
-        raise ValueError("scorer must return a value between 0 and 1")
     return score
 
 
 def partial_ratio(
     s1: Sequence[Hashable],
     s2: Sequence[Hashable],
-    preprocess: Callable[..., Sequence[Hashable]] = None,
     scorer: Callable[..., float] = levenshtein.ratio,
 ) -> float:
     """Return a measure of the sequences' similarity between 0 and 1.
@@ -65,9 +58,6 @@ def partial_ratio(
             The first sequence to compare.
         s2:
             The second sequence to compare.
-        preprocess:
-            A function that pre-process the input sequences. For example, it can change the chinese
-            characters to their pinyin representations.
         scorer:
             A function that provides a measure of the similarity between two sequences and it
             should returns a float between 0 and 1, inclusive. The default scorer is the Levenshtein
@@ -78,15 +68,13 @@ def partial_ratio(
 
     Raises:
         TypeError: If s1 or s2 is None.
-        ValueError: If the scorer returns a value outside of the range [0, 1].
     """
     if s1 is None or s2 is None:
         raise TypeError("s1 and s2 must be non-None")
-    if preprocess is not None:
-        s1 = preprocess(s1)
-        s2 = preprocess(s2)
     if len(s1) > len(s2):
         s1, s2 = s2, s1
+    s1 = lazy_pinyin(s1)
+    s2 = lazy_pinyin(s2)
     best = scorer(s1, s2)
     # TODO: Use a better algorithm to find the best matching substring.
     for i in range(len(s1), len(s2)):
@@ -95,51 +83,3 @@ def partial_ratio(
             if score > best:
                 best = score
     return best
-
-
-def token_sort_ratio(
-    s1: Sequence[Hashable],
-    s2: Sequence[Hashable],
-    preprocess: Callable[..., Sequence[Hashable]] = None,
-    tokenizer: Callable[..., Sequence[Hashable]] = tokenizer.default,
-    scorer: Callable[..., float] = levenshtein.ratio,
-) -> float:
-    """Return a measure of the sequences' similarity between 0 and 1.
-
-    Token sort ratio is similar to ratio, but it sorts the tokens in the input sequences before
-    comparing them. For example, if s1 is "token sort" and s2 is "sort token", then the token sort
-    ratio is 1.0.
-
-    Args:
-        s1:
-            The first sequence to compare.
-        s2:
-            The second sequence to compare.
-        preprocess:
-            A function that pre-process the input sequences. For example, it can change the chinese
-            characters to their pinyin representations.
-        tokenizer:
-            A function that tokenize the input sequences. The default tokenizer is the default
-            tokenizer in the tokenizer module.
-        scorer:
-            A function that provides a measure of the similarity between two sequences and it
-            should returns a float between 0 and 1, inclusive. The default scorer is the Levenshtein
-            ratio.
-
-    Returns:
-        float: The similarity between the two sequences and it is between 0 and 1, inclusive.
-
-    Raises:
-        TypeError: If s1 or s2 is None.
-        ValueError: If the scorer returns a value outside of the range [0, 1].
-    """
-    if s1 is None or s2 is None:
-        raise TypeError("s1 and s2 must be non-None")
-    if tokenizer is None:
-        raise TypeError("preprocess must be non-None")
-    if preprocess is not None:
-        s1 = preprocess(s1)
-        s2 = preprocess(s2)
-    s1 = sorted(tokenizer(s1))
-    s2 = sorted(tokenizer(s2))
-    return scorer(sorted(s1), sorted(s2))

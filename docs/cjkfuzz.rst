@@ -9,13 +9,11 @@ Submodules
 
    cjkfuzz.fuzz
    cjkfuzz.hamming
+   cjkfuzz.jaccard
    cjkfuzz.jaro
    cjkfuzz.jaro_winkler
    cjkfuzz.levenshtein
-   cjkfuzz.match
    cjkfuzz.process
-   cjkfuzz.tokenizer
-   cjkfuzz.utils
 
 Module contents
 ---------------
